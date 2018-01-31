@@ -37,6 +37,7 @@ type Config struct {
 	SSHProxyPort              int           `mapstructure:"ssh_proxy_port"`
 	SSHProxyUsername          string        `mapstructure:"ssh_proxy_username"`
 	SSHProxyPassword          string        `mapstructure:"ssh_proxy_password"`
+	SSHReadWriteTimeout       time.Duration `mapstructure:"ssh_read_write_timeout"`
 
 	// WinRM
 	WinRMUser               string        `mapstructure:"winrm_username"`

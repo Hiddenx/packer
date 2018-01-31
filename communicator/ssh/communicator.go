@@ -55,6 +55,9 @@ type Config struct {
 
 	// UseSftp, if true, sftp will be used instead of scp for file transfers
 	UseSftp bool
+
+	// Timeout is how long to wait for a read or write to succeed.
+	Timeout time.Duration
 }
 
 // Creates a new packer.Communicator implementation over SSH. This takes
@@ -271,6 +274,10 @@ func (c *comm) reconnect() (err error) {
 
 		log.Printf("reconnection error: %s", err)
 		return
+	}
+
+	if c.config.Timeout > 0 {
+		c.conn = &timeoutConn{c.conn, c.config.Timeout, c.config.Timeout}
 	}
 
 	log.Printf("handshaking with SSH")
